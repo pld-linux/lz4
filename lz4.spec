@@ -8,11 +8,10 @@ License:	GPL-2.0+ and BSD-2-Clause
 Group:		Libraries
 Source0:	https://dl.dropboxusercontent.com/u/59565338/LZ4/%{name}-r%{svnrev}.tar.gz
 # Source0-md5:	4d071aaecd42dd383dd58c5a7577663b
+Patch0:		cmake-langs.patch
 URL:		http://fastcompression.blogspot.com/p/lz4.html
 BuildRequires:	cmake
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
-%undefine	__cxx
 
 %description
 LZ4 is a very fast compressor, based on well-known LZ77 (Lempel-Ziv)
@@ -46,6 +45,7 @@ Statyczna biblioteka %{name}.
 
 %prep
 %setup -qn %{name}-r%{svnrev}
+%patch0 -p1
 
 %build
 cd cmake
