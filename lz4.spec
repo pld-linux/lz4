@@ -11,6 +11,7 @@ Source0:	https://dl.dropboxusercontent.com/u/59565338/LZ4/%{name}-r%{svnrev}.tar
 Patch0:		cmake-langs.patch
 URL:		http://fastcompression.blogspot.com/p/lz4.html
 BuildRequires:	cmake
+BuildRequires:	sed >= 4.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -46,6 +47,8 @@ Statyczna biblioteka %{name}.
 %prep
 %setup -qn %{name}-r%{svnrev}
 %patch0 -p1
+
+%{__sed} -i -e 's/-Os -march=native/%{rpmcflags}/' cmake/CMakeLists.txt
 
 %build
 cd cmake
