@@ -12,6 +12,8 @@ URL:		http://fastcompression.blogspot.com/p/lz4.html
 BuildRequires:	cmake
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
+%undefine	__cxx
+
 %description
 LZ4 is a very fast compressor, based on well-known LZ77 (Lempel-Ziv)
 algorithm. It is a LZP2 fork and provides better compression ratio for
