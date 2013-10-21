@@ -1,5 +1,8 @@
+# NOTE:
+# - probably version could be set 1.0.7 for r107, see lz4cli.c and
+#   https://code.google.com/p/lz4/issues/detail?id=88#c4
 %define		rel	1
-%define		svnrev	106
+%define		svnrev	107
 Summary:	Hash-based Predictive Lempel-Ziv compressor
 Summary(pl.UTF-8):	Kompresor wykorzystujący metodę Lempel-Ziv z predykcją opartą na haszach
 Name:		lz4
@@ -8,8 +11,7 @@ Release:	0.svn%{svnrev}.%{rel}
 License:	BSD (library), GPL v2+ (CLI utility)
 Group:		Libraries
 Source0:	https://dl.dropboxusercontent.com/u/59565338/LZ4/%{name}-r%{svnrev}.tar.gz
-# Source0-md5:	4d071aaecd42dd383dd58c5a7577663b
-Patch0:		cmake-langs.patch
+# Source0-md5:	626947ce4c67f87fdce8922ae0f4cc00
 URL:		http://fastcompression.blogspot.com/p/lz4.html
 BuildRequires:	cmake >= 2.6
 BuildRequires:	sed >= 4.0
@@ -61,7 +63,6 @@ Statyczna biblioteka kompresora LZ4.
 
 %prep
 %setup -qn %{name}-r%{svnrev}
-%patch0 -p1
 
 %{__sed} -i -e 's/-Os -march=native/%{rpmcflags}/' cmake/CMakeLists.txt
 
