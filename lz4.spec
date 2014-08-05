@@ -2,18 +2,17 @@
 # - probably version could be set 1.0.7 for r107, see lz4cli.c and
 #   https://code.google.com/p/lz4/issues/detail?id=88#c4
 %define		rel	1
-%define		svnrev	107
+%define		subver	r120
 Summary:	Hash-based Predictive Lempel-Ziv compressor
 Summary(pl.UTF-8):	Kompresor wykorzystujący metodę Lempel-Ziv z predykcją opartą na haszach
 Name:		lz4
 Version:	0.0
-Release:	0.svn%{svnrev}.%{rel}
+Release:	1.%{subver}.%{rel}
 License:	BSD (library), GPL v2+ (CLI utility)
 Group:		Libraries
-Source0:	https://dl.dropboxusercontent.com/u/59565338/LZ4/%{name}-r%{svnrev}.tar.gz
-# Source0-md5:	626947ce4c67f87fdce8922ae0f4cc00
+Source0:	https://github.com/Cyan4973/lz4/archive/%{subver}/%{name}-%{subver}.tar.gz
+# Source0-md5:	40ff635feb421958ef1dd776a492f629
 URL:		http://fastcompression.blogspot.com/p/lz4.html
-BuildRequires:	cmake >= 2.6
 BuildRequires:	sed >= 4.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -62,45 +61,23 @@ Static LZ4 compressor library.
 Statyczna biblioteka kompresora LZ4.
 
 %prep
-%setup -qn %{name}-r%{svnrev}
+%setup -qn %{name}-%{subver}
 
+mv cmake{_unofficial,}
 %{__sed} -i -e 's/-Os -march=native/%{rpmcflags}/' cmake/CMakeLists.txt
 
 %build
-cd cmake
-%cmake . \
-	-DBUILD_SHARED_LIBS=TRUE
-
-%{__make}
+CFLAGS="%{rpmcflags}"
+%{__make} \
+	CC="%{__cc}" \
+	CPPFLAGS="%{rpmcppflags}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
-# all available build systems suck in some way:
-# 1) make-based installed creates only man and exe (no library, no headers)
-#
-# 2) cmake based build system creates lib and exe (no man pages), and names
-# executable based on arch (!), installs headers, but the SONAME is filled
-# incorrectly: liblz4.so.0.0
-
-# so forget all that and just install from spec
-install -d $RPM_BUILD_ROOT{%{_bindir},%{_libdir},%{_mandir}/man1,%{_includedir}}
-
-# shared lib
-install -p cmake/liblz4.so.0.* $RPM_BUILD_ROOT%{_libdir}/liblz4.so.0.0.%{svnrev}
-ln -s $(basename $RPM_BUILD_ROOT%{_libdir}/liblz4.so.0.*) $RPM_BUILD_ROOT%{_libdir}/liblz4.so
-/sbin/ldconfig -n $RPM_BUILD_ROOT%{_libdir}
-
-# static lib
-cp -p cmake/liblz4.a $RPM_BUILD_ROOT%{_libdir}
-
-# headers
-cp -a {lz4,lz4hc}.h $RPM_BUILD_ROOT%{_includedir}
-
-# binary
-install -p cmake/lz4c* $RPM_BUILD_ROOT%{_bindir}/lz4
-
-# man page
-cp -p lz4.1 $RPM_BUILD_ROOT%{_mandir}/man1
+%{__make} install \
+	LIBDIR=%{_libdir} \
+	INSTALL="install -p" \
+	DESTDIR=$RPM_BUILD_ROOT \
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -110,11 +87,15 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc NEWS
+%doc README.md NEWS LICENSE
 %attr(755,root,root) %{_bindir}/lz4
+%attr(755,root,root) %{_bindir}/lz4c
+%attr(755,root,root) %{_bindir}/lz4cat
 %{_mandir}/man1/lz4.1*
+%{_mandir}/man1/lz4c.1*
+%{_mandir}/man1/lz4cat.1*
 %attr(755,root,root) %{_libdir}/liblz4.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/liblz4.so.0.0
+%attr(755,root,root) %ghost %{_libdir}/liblz4.so.1
 
 %files devel
 %defattr(644,root,root,755)
@@ -122,6 +103,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/liblz4.so
 %{_includedir}/lz4.h
 %{_includedir}/lz4hc.h
+%{_pkgconfigdir}/liblz4.pc
 
 %files static
 %defattr(644,root,root,755)
