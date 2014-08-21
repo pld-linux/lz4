@@ -2,7 +2,7 @@
 # - probably version could be set 1.0.7 for r107, see lz4cli.c and
 #   https://code.google.com/p/lz4/issues/detail?id=88#c4
 %define		rel	1
-%define		subver	r120
+%define		subver	r121
 Summary:	Hash-based Predictive Lempel-Ziv compressor
 Summary(pl.UTF-8):	Kompresor wykorzystujący metodę Lempel-Ziv z predykcją opartą na haszach
 Name:		lz4
@@ -11,7 +11,7 @@ Release:	1.%{subver}.%{rel}
 License:	BSD (library), GPL v2+ (CLI utility)
 Group:		Libraries
 Source0:	https://github.com/Cyan4973/lz4/archive/%{subver}/%{name}-%{subver}.tar.gz
-# Source0-md5:	40ff635feb421958ef1dd776a492f629
+# Source0-md5:	2de6fe3c2f8d52d9532a913b0e3b6465
 URL:		http://fastcompression.blogspot.com/p/lz4.html
 BuildRequires:	sed >= 4.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
