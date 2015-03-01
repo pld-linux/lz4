@@ -1,7 +1,7 @@
 # NOTE:
 # - probably version could be set 1.0.7 for r107, see lz4cli.c and
 #   https://code.google.com/p/lz4/issues/detail?id=88#c4
-%define		rel	1
+%define		rel	2
 %define		subver	r121
 Summary:	Hash-based Predictive Lempel-Ziv compressor
 Summary(pl.UTF-8):	Kompresor wykorzystujący metodę Lempel-Ziv z predykcją opartą na haszach
