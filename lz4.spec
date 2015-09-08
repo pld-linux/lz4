@@ -22,6 +22,7 @@ współczynnik kompresji dla plików tekstowych.
 
 %package libs
 Summary:	LZ4 library
+Summary(pl.UTF-8):	Biblioteka LZ4
 License:	BSD
 Group:		Libraries
 Conflicts:	%{name} < 0.0-1.r121.3
@@ -29,9 +30,13 @@ Conflicts:	%{name} < 0.0-1.r121.3
 %description libs
 LZ4 library.
 
+%description libs -l pl.UTF_8
+Biblioteka LZ4.
+
 %package devel
 Summary:	Development files for the LZ4 compressor
 Summary(pl.UTF-8):	Pliki programistyczne kompresora LZ4
+License:	BSD
 Group:		Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 
@@ -54,6 +59,7 @@ wykorzystujących liblz4.
 %package static
 Summary:	Static LZ4 compressor library
 Summary(pl.UTF-8):	Statyczna biblioteka kompresora LZ4
+License:	BSD
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
@@ -68,10 +74,9 @@ Statyczna biblioteka kompresora LZ4.
 
 %build
 CFLAGS="%{rpmcflags}" \
-%{__make} \
+%{__make} lib all \
 	CC="%{__cc}" \
-	CPPFLAGS="%{rpmcppflags}" \
-	lib all
+	CPPFLAGS="%{rpmcppflags}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
