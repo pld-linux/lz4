@@ -1,17 +1,12 @@
-# NOTE:
-# - probably version could be set 1.0.7 for r107, see lz4cli.c and
-#   https://code.google.com/p/lz4/issues/detail?id=88#c4
-%define		rel	3
-%define		subver	r121
 Summary:	Hash-based Predictive Lempel-Ziv compressor
 Summary(pl.UTF-8):	Kompresor wykorzystujący metodę Lempel-Ziv z predykcją opartą na haszach
 Name:		lz4
-Version:	0.0
-Release:	1.%{subver}.%{rel}
+Version:	r131
+Release:	1
 License:	BSD (library), GPL v2+ (CLI utility)
 Group:		Libraries
-Source0:	https://github.com/Cyan4973/lz4/archive/%{subver}/%{name}-%{subver}.tar.gz
-# Source0-md5:	2de6fe3c2f8d52d9532a913b0e3b6465
+Source0:	https://github.com/Cyan4973/lz4/archive/%{version}/%{name}-%{version}.tar.gz
+# Source0-md5:	42b09fab42331da9d3fb33bd5c560de9
 URL:		http://fastcompression.blogspot.com/p/lz4.html
 BuildRequires:	sed >= 4.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -69,13 +64,13 @@ Static LZ4 compressor library.
 Statyczna biblioteka kompresora LZ4.
 
 %prep
-%setup -qn %{name}-%{subver}
+%setup -q
 
 mv cmake{_unofficial,}
 %{__sed} -i -e 's/-Os -march=native/%{rpmcflags}/' cmake/CMakeLists.txt
 
 %build
-CFLAGS="%{rpmcflags}"
+CFLAGS="%{rpmcflags}" \
 %{__make} \
 	CC="%{__cc}" \
 	CPPFLAGS="%{rpmcppflags}"
@@ -83,6 +78,7 @@ CFLAGS="%{rpmcflags}"
 %install
 rm -rf $RPM_BUILD_ROOT
 %{__make} install \
+	PREFIX=%{_prefix} \
 	LIBDIR=%{_libdir} \
 	INSTALL="install -p" \
 	DESTDIR=$RPM_BUILD_ROOT \
@@ -95,13 +91,15 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc README.md NEWS LICENSE
+%doc README.md NEWS
 %attr(755,root,root) %{_bindir}/lz4
 %attr(755,root,root) %{_bindir}/lz4c
 %attr(755,root,root) %{_bindir}/lz4cat
+%attr(755,root,root) %{_bindir}/unlz4
 %{_mandir}/man1/lz4.1*
 %{_mandir}/man1/lz4c.1*
 %{_mandir}/man1/lz4cat.1*
+%{_mandir}/man1/unlz4.1*
 
 %files libs
 %defattr(644,root,root,755)
@@ -110,10 +108,10 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%doc LZ4_Streaming_Format.odt lz4_format_description.txt
 %attr(755,root,root) %{_libdir}/liblz4.so
 %{_includedir}/lz4.h
 %{_includedir}/lz4hc.h
+%{_includedir}/lz4frame.h
 %{_pkgconfigdir}/liblz4.pc
 
 %files static
