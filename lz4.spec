@@ -4,11 +4,10 @@ Name:		lz4
 Version:	r131
 Release:	1
 License:	BSD (library), GPL v2+ (CLI utility)
-Group:		Libraries
+Group:		Applications
 Source0:	https://github.com/Cyan4973/lz4/archive/%{version}/%{name}-%{version}.tar.gz
 # Source0-md5:	42b09fab42331da9d3fb33bd5c560de9
 URL:		http://fastcompression.blogspot.com/p/lz4.html
-BuildRequires:	sed >= 4.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -23,6 +22,7 @@ współczynnik kompresji dla plików tekstowych.
 
 %package libs
 Summary:	LZ4 library
+License:	BSD
 Group:		Libraries
 Conflicts:	%{name} < 0.0-1.r121.3
 
@@ -65,9 +65,6 @@ Statyczna biblioteka kompresora LZ4.
 
 %prep
 %setup -q
-
-mv cmake{_unofficial,}
-%{__sed} -i -e 's/-Os -march=native/%{rpmcflags}/' cmake/CMakeLists.txt
 
 %build
 CFLAGS="%{rpmcflags}" \
