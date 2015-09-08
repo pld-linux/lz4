@@ -73,7 +73,8 @@ mv cmake{_unofficial,}
 CFLAGS="%{rpmcflags}" \
 %{__make} \
 	CC="%{__cc}" \
-	CPPFLAGS="%{rpmcppflags}"
+	CPPFLAGS="%{rpmcppflags}" \
+	lib all
 
 %install
 rm -rf $RPM_BUILD_ROOT
