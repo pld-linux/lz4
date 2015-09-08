@@ -1,7 +1,7 @@
 # NOTE:
 # - probably version could be set 1.0.7 for r107, see lz4cli.c and
 #   https://code.google.com/p/lz4/issues/detail?id=88#c4
-%define		rel	2
+%define		rel	3
 %define		subver	r121
 Summary:	Hash-based Predictive Lempel-Ziv compressor
 Summary(pl.UTF-8):	Kompresor wykorzystujący metodę Lempel-Ziv z predykcją opartą na haszach
@@ -26,11 +26,19 @@ LZ4 to bardzo szybki kompresor, oparty na dobrze znanym algorytmie
 LZ77 (Lempel-Ziv). Jest to odgałęzienie LZP2, zapewniające lepszy
 współczynnik kompresji dla plików tekstowych.
 
+%package libs
+Summary:	LZ4 library
+Group:		Libraries
+Conflicts:	%{name} < 0.0-1.r121.3
+
+%description libs
+LZ4 library.
+
 %package devel
 Summary:	Development files for the LZ4 compressor
 Summary(pl.UTF-8):	Pliki programistyczne kompresora LZ4
 Group:		Development/Libraries
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name}-libs = %{version}-%{release}
 
 %description devel
 LZ4 is a very fast compressor, based on well-known LZ77 (Lempel-Ziv)
@@ -82,8 +90,8 @@ rm -rf $RPM_BUILD_ROOT
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post	-p /sbin/ldconfig
-%postun	-p /sbin/ldconfig
+%post	libs -p /sbin/ldconfig
+%postun	libs -p /sbin/ldconfig
 
 %files
 %defattr(644,root,root,755)
@@ -94,6 +102,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/lz4.1*
 %{_mandir}/man1/lz4c.1*
 %{_mandir}/man1/lz4cat.1*
+
+%files libs
+%defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/liblz4.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/liblz4.so.1
 
