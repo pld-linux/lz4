@@ -7,7 +7,7 @@ License:	BSD (library), GPL v2+ (CLI utility)
 Group:		Applications
 Source0:	https://github.com/Cyan4973/lz4/archive/%{version}/%{name}-%{version}.tar.gz
 # Source0-md5:	42b09fab42331da9d3fb33bd5c560de9
-URL:		http://fastcompression.blogspot.com/p/lz4.html
+URL:		http://www.lz4.org/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
