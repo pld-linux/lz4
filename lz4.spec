@@ -8,6 +8,9 @@ Group:		Applications
 Source0:	https://github.com/Cyan4973/lz4/archive/%{version}/%{name}-%{version}.tar.gz
 # Source0-md5:	42b09fab42331da9d3fb33bd5c560de9
 URL:		http://www.lz4.org/
+%ifarch %{x8664}
+BuildRequires:	gcc-multilib-32
+%endif
 Requires:	%{name}-libs = %{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
