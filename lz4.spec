@@ -2,7 +2,7 @@ Summary:	Hash-based Predictive Lempel-Ziv compressor
 Summary(pl.UTF-8):	Kompresor wykorzystujący metodę Lempel-Ziv z predykcją opartą na haszach
 Name:		lz4
 Version:	r131
-Release:	4
+Release:	5
 License:	BSD (library), GPL v2+ (CLI utility)
 Group:		Applications
 Source0:	https://github.com/Cyan4973/lz4/archive/%{version}/%{name}-%{version}.tar.gz
@@ -84,11 +84,17 @@ CFLAGS="%{rpmcflags}" \
 
 %install
 rm -rf $RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT/%{_lib}
+
 %{__make} install \
 	PREFIX=%{_prefix} \
 	LIBDIR=%{_libdir} \
 	INSTALL="install -p" \
 	DESTDIR=$RPM_BUILD_ROOT \
+
+mv $RPM_BUILD_ROOT%{_libdir}/liblz4.so.* $RPM_BUILD_ROOT/%{_lib}
+ln -sf /%{_lib}/$(cd $RPM_BUILD_ROOT/%{_lib}; echo liblz4.so.*.*.*) \
+        $RPM_BUILD_ROOT%{_libdir}/liblz4.so
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -110,8 +116,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %files libs
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/liblz4.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/liblz4.so.1
+%attr(755,root,root) /%{_lib}/liblz4.so.*.*.*
+%attr(755,root,root) %ghost /%{_lib}/liblz4.so.1
 
 %files devel
 %defattr(644,root,root,755)
