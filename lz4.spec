@@ -83,13 +83,14 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	PREFIX=%{_prefix} \
 	LIBDIR=%{_libdir} \
+	INCLUDEDIR=%{_includedir}/lz4 \
 	INSTALL="install -p" \
 	DESTDIR=$RPM_BUILD_ROOT \
 
 install -d $RPM_BUILD_ROOT/%{_lib}
 mv $RPM_BUILD_ROOT%{_libdir}/liblz4.so.* $RPM_BUILD_ROOT/%{_lib}
-ln -sf /%{_lib}/$(cd $RPM_BUILD_ROOT/%{_lib}; echo liblz4.so.*.*.*) \
-        $RPM_BUILD_ROOT%{_libdir}/liblz4.so
+ln -sf /%{_lib}/$(basename $RPM_BUILD_ROOT/%{_lib}/liblz4.so.*.*.*) \
+	$RPM_BUILD_ROOT%{_libdir}/liblz4.so
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -117,9 +118,10 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/liblz4.so
-%{_includedir}/lz4.h
-%{_includedir}/lz4hc.h
-%{_includedir}/lz4frame.h
+%dir %{_includedir}/lz4
+%{_includedir}/lz4/lz4.h
+%{_includedir}/lz4/lz4hc.h
+%{_includedir}/lz4/lz4frame.h
 %{_pkgconfigdir}/liblz4.pc
 
 %files static
