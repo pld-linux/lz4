@@ -1,13 +1,12 @@
 Summary:	Hash-based Predictive Lempel-Ziv compressor
 Summary(pl.UTF-8):	Kompresor wykorzystujący metodę Lempel-Ziv z predykcją opartą na haszach
 Name:		lz4
-Version:	r131
-Release:	5
+Version:	1.7.4.2
+Release:	1
 License:	BSD (library), GPL v2+ (CLI utility)
 Group:		Applications
-Source0:	https://github.com/Cyan4973/lz4/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	42b09fab42331da9d3fb33bd5c560de9
-Patch0:		%{name}-nom32.patch
+Source0:	https://github.com/lz4/lz4/archive/v%{version}/%{name}-%{version}.tar.gz
+# Source0-md5:	c8a1e198555fb0650448e498b7614ae5
 URL:		http://www.lz4.org/
 Requires:	%{name}-libs = %{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -73,24 +72,21 @@ Statyczna biblioteka kompresora LZ4.
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
-CFLAGS="%{rpmcflags}" \
-%{__make} lib all \
-	CC="%{__cc}" \
-	CPPFLAGS="%{rpmcppflags}"
+%{__make} -j1 \
+	MOREFLAGS="%{rpmcflags} %{rpmcppflags}" \
+	CC="%{__cc}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT/%{_lib}
-
 %{__make} install \
 	PREFIX=%{_prefix} \
 	LIBDIR=%{_libdir} \
 	INSTALL="install -p" \
 	DESTDIR=$RPM_BUILD_ROOT \
 
+install -d $RPM_BUILD_ROOT/%{_lib}
 mv $RPM_BUILD_ROOT%{_libdir}/liblz4.so.* $RPM_BUILD_ROOT/%{_lib}
 ln -sf /%{_lib}/$(cd $RPM_BUILD_ROOT/%{_lib}; echo liblz4.so.*.*.*) \
         $RPM_BUILD_ROOT%{_libdir}/liblz4.so
