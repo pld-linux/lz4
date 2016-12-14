@@ -9,6 +9,7 @@ Group:		Applications
 Source0:	https://github.com/lz4/lz4/archive/v%{version}/%{name}-%{version}.tar.gz
 # Source0-md5:	c8a1e198555fb0650448e498b7614ae5
 URL:		http://www.lz4.org/
+BuildRequires:	pkgconfig
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
