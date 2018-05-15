@@ -1,14 +1,14 @@
 Summary:	Hash-based Predictive Lempel-Ziv compressor
 Summary(pl.UTF-8):	Kompresor wykorzystujący metodę Lempel-Ziv z predykcją opartą na haszach
 Name:		lz4
-Version:	1.8.1.2
+Version:	1.8.2
 Release:	1
 Epoch:		1
 License:	BSD (library), GPL v2+ (CLI utility)
 Group:		Applications
 #Source0Download: https://github.com/lz4/lz4/releases
 Source0:	https://github.com/lz4/lz4/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	343538e69ba752a386c669b1a28111e2
+# Source0-md5:	c2082b751d75550ec4dc163c773e1a71
 URL:		http://www.lz4.org/
 BuildRequires:	pkgconfig
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
@@ -86,8 +86,8 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	PREFIX=%{_prefix} \
 	LIBDIR=%{_libdir} \
-	INCLUDEDIR=%{_includedir}/lz4 \
-	MANDIR=%{_mandir}/man1 \
+	INCLUDEDIR=%{_includedir} \
+	MANDIR=%{_mandir} \
 	INSTALL="install -p" \
 	DESTDIR=$RPM_BUILD_ROOT \
 
@@ -123,11 +123,10 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/liblz4.so
-%dir %{_includedir}/lz4
-%{_includedir}/lz4/lz4.h
-%{_includedir}/lz4/lz4hc.h
-%{_includedir}/lz4/lz4frame.h
-%{_includedir}/lz4/lz4frame_static.h
+%{_includedir}/lz4.h
+%{_includedir}/lz4hc.h
+%{_includedir}/lz4frame.h
+%{_includedir}/lz4frame_static.h
 %{_pkgconfigdir}/liblz4.pc
 
 %files static
