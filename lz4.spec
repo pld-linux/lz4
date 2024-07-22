@@ -1,14 +1,14 @@
 Summary:	Hash-based Predictive Lempel-Ziv compressor
 Summary(pl.UTF-8):	Kompresor wykorzystujący metodę Lempel-Ziv z predykcją opartą na haszach
 Name:		lz4
-Version:	1.9.4
-Release:	2
+Version:	1.10.0
+Release:	1
 Epoch:		1
 License:	BSD (library), GPL v2+ (CLI utility)
 Group:		Applications
 #Source0Download: https://github.com/lz4/lz4/releases
 Source0:	https://github.com/lz4/lz4/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	e9286adb64040071c5e23498bf753261
+# Source0-md5:	dead9f5f1966d9ae56e1e32761e4e675
 URL:		http://www.lz4.org/
 BuildRequires:	pkgconfig
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
@@ -78,7 +78,7 @@ Statyczna biblioteka kompresora LZ4.
 
 %build
 %{__make} -j1 \
-	MOREFLAGS="%{rpmcflags} %{rpmcppflags}" \
+	CFLAGS="%{rpmcflags} %{rpmcppflags}" \
 	LDFLAGS="%{rpmldflags}" \
 	CC="%{__cc}" \
 	V=1
@@ -127,6 +127,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/liblz4.so
 %{_includedir}/lz4.h
 %{_includedir}/lz4hc.h
+%{_includedir}/lz4file.h
 %{_includedir}/lz4frame.h
 %{_includedir}/lz4frame_static.h
 %{_pkgconfigdir}/liblz4.pc
