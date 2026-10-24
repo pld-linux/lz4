@@ -2,7 +2,7 @@ Summary:	Hash-based Predictive Lempel-Ziv compressor
 Summary(pl.UTF-8):	Kompresor wykorzystujący metodę Lempel-Ziv z predykcją opartą na haszach
 Name:		lz4
 Version:	1.10.0
-Release:	2
+Release:	3
 Epoch:		1
 License:	BSD (library), GPL v2+ (CLI utility)
 Group:		Applications
@@ -11,7 +11,7 @@ Source0:	https://github.com/lz4/lz4/archive/v%{version}/%{name}-%{version}.tar.g
 # Source0-md5:	dead9f5f1966d9ae56e1e32761e4e675
 URL:		https://lz4.org/
 BuildRequires:	pkgconfig
-Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libs%{?_isa} = %{epoch}:%{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -42,7 +42,7 @@ Summary:	Development files for the LZ4 compressor
 Summary(pl.UTF-8):	Pliki programistyczne kompresora LZ4
 License:	BSD
 Group:		Development/Libraries
-Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libs%{?_isa} = %{epoch}:%{version}-%{release}
 
 %description devel
 LZ4 is a very fast compressor, based on well-known LZ77 (Lempel-Ziv)
@@ -65,7 +65,7 @@ Summary:	Static LZ4 compressor library
 Summary(pl.UTF-8):	Statyczna biblioteka kompresora LZ4
 License:	BSD
 Group:		Development/Libraries
-Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
+Requires:	%{name}-devel%{?_isa} = %{epoch}:%{version}-%{release}
 
 %description static
 Static LZ4 compressor library.
