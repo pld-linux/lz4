@@ -77,25 +77,30 @@ Statyczna biblioteka kompresora LZ4.
 %setup -q
 
 %build
-%{__make} -j1 \
+%{__make} -j1 default lz4 \
 	CC="%{__cc}" \
 	CFLAGS="%{rpmcflags} %{rpmcppflags}" \
 	LDFLAGS="%{rpmldflags}" \
 	prefix=%{_prefix} \
 	libdir=%{_libdir} \
 	includedir=%{_includedir} \
+	mandir=%{_mandir} \
 	V=1
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
+	CC="%{__cc}" \
+	CFLAGS="%{rpmcflags} %{rpmcppflags}" \
+	LDFLAGS="%{rpmldflags}" \
 	prefix=%{_prefix} \
 	libdir=%{_libdir} \
 	includedir=%{_includedir} \
 	mandir=%{_mandir} \
 	INSTALL="install -p" \
 	DESTDIR=$RPM_BUILD_ROOT \
+	V=1
 
 install -d $RPM_BUILD_ROOT/%{_lib}
 %{__mv} $RPM_BUILD_ROOT%{_libdir}/liblz4.so.* $RPM_BUILD_ROOT/%{_lib}
