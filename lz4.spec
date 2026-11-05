@@ -128,12 +128,12 @@ rm -rf $RPM_BUILD_ROOT
 %files libs
 %defattr(644,root,root,755)
 %doc lib/{LICENSE,README.md}
-%attr(755,root,root) /%{_lib}/liblz4.so.*.*.*
-%attr(755,root,root) %ghost /%{_lib}/liblz4.so.1
+/%{_lib}/liblz4.so.*.*.*
+%ghost /%{_lib}/liblz4.so.1
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/liblz4.so
+%{_libdir}/liblz4.so
 %{_includedir}/lz4.h
 %{_includedir}/lz4hc.h
 %{_includedir}/lz4file.h
