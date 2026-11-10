@@ -1,14 +1,14 @@
 Summary:	Hash-based Predictive Lempel-Ziv compressor
 Summary(pl.UTF-8):	Kompresor wykorzystujący metodę Lempel-Ziv z predykcją opartą na haszach
 Name:		lz4
-Version:	1.11.0
+Version:	1.11.1
 Release:	1
 Epoch:		1
 License:	BSD (library), GPL v2+ (CLI utility)
 Group:		Applications
 #Source0Download: https://github.com/lz4/lz4/releases
 Source0:	https://github.com/lz4/lz4/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	a98234c375a350b443c8c2073e098f1f
+# Source0-md5:	c7e92491e736fcf5916315103cc188c8
 URL:		https://lz4.org/
 BuildRequires:	pkgconfig
 Requires:	%{name}-libs%{?_isa} = %{epoch}:%{version}-%{release}
